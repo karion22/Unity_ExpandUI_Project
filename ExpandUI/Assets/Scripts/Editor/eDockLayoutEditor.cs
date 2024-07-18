@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 
-[CustomEditor(typeof(eDockPanel))]
-public class eDockPanelEditor : Editor
+[CustomEditor(typeof(eDockLayout))]
+public class eDockLayoutEditor : Editor
 {
     public override void OnInspectorGUI()
     {
@@ -12,7 +12,7 @@ public class eDockPanelEditor : Editor
 
         if(GUILayout.Button("Apply"))
         {
-            var script = (eDockPanel)target;
+            var script = (eDockLayout)target;
             script.UpdateLayout();
         }
     }

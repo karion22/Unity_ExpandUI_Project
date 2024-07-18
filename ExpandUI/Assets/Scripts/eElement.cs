@@ -1,10 +1,19 @@
+using KRN.Utility;
 using UnityEngine;
-using UnityEngine.Events;
-using UnityEngine.EventSystems;
-
 
 public class eElement : MonoBehaviour
 {
+    protected RectTransform m_RectTransform = null;
+    public RectTransform RectTransform
+    {
+        get
+        {
+            if(object.ReferenceEquals(m_RectTransform, null))
+                m_RectTransform = transform as RectTransform;
+            return m_RectTransform;
+        }
+    }
+
     protected virtual void Awake() { }
     protected virtual void Start() { }
     public virtual void OnCreated(int inElement, Transform inParent) 
@@ -18,10 +27,14 @@ public class eElement : MonoBehaviour
 
     public virtual void SetActive(bool isActivate)
     {
-        gameObject?.SetActive(isActivate);
-    }
-
-    public void Update()
-    {
+        if(gameObject == null)
+        {
+            DebugLog.Assert("GameObject is null");
+        }
+        else
+        {
+            gameObject.SetActive(isActivate);
+            RectTransform.parent?.GetComponent<eDockLayout>()?.UpdateLayout(false);
+        }
     }
 }

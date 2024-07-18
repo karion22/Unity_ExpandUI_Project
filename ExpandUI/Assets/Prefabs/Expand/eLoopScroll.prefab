@@ -254,7 +254,7 @@ GameObject:
   - component: {fileID: 6750540208552876830}
   - component: {fileID: 1586482261276366656}
   m_Layer: 5
-  m_Name: LoopScrollCanvas
+  m_Name: eLoopScroll
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

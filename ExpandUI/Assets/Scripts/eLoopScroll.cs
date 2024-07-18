@@ -151,16 +151,6 @@ public class eLoopScroll : eElement
 
     private RowCollection m_Rows = new RowCollection();
 
-    private RectTransform m_RectTransform;
-    private RectTransform RectTransform { 
-        get 
-        {
-            if (m_RectTransform == null) 
-                m_RectTransform = GetComponent<RectTransform>(); 
-            return m_RectTransform; 
-        } 
-    }
-
     private RectTransform m_ContentRectTransform;
     private ScrollRect m_ContentScrollRect;
     private RectTransform ContentRectTransform

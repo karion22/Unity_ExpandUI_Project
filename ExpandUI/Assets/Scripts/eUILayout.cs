@@ -1,15 +1,12 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(RectTransform))]
-[AddComponentMenu("UI/eLayout")]
 [ExecuteInEditMode]
 public class eUILayout : eElement
 {
     public enum eHorizontalAlignment
     {
-        Irregular,
+        None,
         Left,
         Center,
         Right,
@@ -18,7 +15,7 @@ public class eUILayout : eElement
 
     public enum eVerticalAlignment
     {
-        Irregular,
+        None,
         Top,
         Middle,
         Bottom,
@@ -37,27 +34,18 @@ public class eUILayout : eElement
 
     public bool KeepSize { get; set; }
 
-    private RectTransform m_RectTransform;
-    public RectTransform RectTransform
-    {
-        get
-        {
-            if (m_RectTransform == null)
-                m_RectTransform = GetComponent<RectTransform>();
-            return m_RectTransform;
-        }
-    }
-
-    private eDockPanel m_DockLayout;
-    public eDockPanel DockLayout
+    private eDockLayout m_DockLayout;
+    public eDockLayout DockLayout
     {
         get
         {
             if (m_DockLayout == null)
-                m_DockLayout = transform.parent.GetComponent<eDockPanel>();
+                m_DockLayout = transform.parent.GetComponent<eDockLayout>();
             return m_DockLayout;
         }
     }
+
+    public eUILayout(float inLeft, float inRight, float inTop, float inBottom) { Set(inLeft, inRight, inTop, inBottom); }
 
     protected override void Start()
     {
@@ -80,6 +68,16 @@ public class eUILayout : eElement
         }
         else
             Alignment(RectTransform.pivot.x, RectTransform.pivot.y);
+    }
+
+    public void Set(float inLeft, float inRight, float inTop, float inBottom)
+    {
+        Left = inLeft;
+        Right = inRight;
+        Top = inTop;
+        Bottom = inBottom;
+
+        RefreshLayout();
     }
 
     public void Alignment(float x, float y)
@@ -108,7 +106,7 @@ public class eUILayout : eElement
 
             switch (hA)
             {
-                case eHorizontalAlignment.Irregular:
+                case eHorizontalAlignment.None:
                     break;
 
                 case eHorizontalAlignment.Left:
@@ -130,7 +128,7 @@ public class eUILayout : eElement
 
             switch (vA)
             {
-                case eVerticalAlignment.Irregular:
+                case eVerticalAlignment.None:
                     break;
 
                 case eVerticalAlignment.Top:
@@ -245,7 +243,7 @@ public class eUILayout : eElement
 
     public static eHorizontalAlignment CheckHorizontalAlignment(RectTransform t)
     {
-        eHorizontalAlignment va = eHorizontalAlignment.Irregular;
+        eHorizontalAlignment va = eHorizontalAlignment.None;
 
         if (t.anchorMin.x == 0f && t.anchorMax.x == 0f)
             va = eHorizontalAlignment.Left;
@@ -261,7 +259,7 @@ public class eUILayout : eElement
 
     public static eVerticalAlignment CheckVerticalAlignment(RectTransform t)
     {
-        eVerticalAlignment va = eVerticalAlignment.Irregular;
+        eVerticalAlignment va = eVerticalAlignment.None;
 
         if (t.anchorMin.y == 0f && t.anchorMax.y == 0f)
             va = eVerticalAlignment.Bottom;

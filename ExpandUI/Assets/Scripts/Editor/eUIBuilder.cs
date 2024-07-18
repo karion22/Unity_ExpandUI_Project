@@ -24,7 +24,7 @@ public class eUIBuilderEditor : EditorWindow
     }
     #endregion
 
-    // Basic
+    // "Default UI"
     [SerializeField] private GameObject m_CanvasPrefab = null;
     [SerializeField] private GameObject m_CameraPrefab = null;
     [SerializeField] private GameObject m_PanelPrefab = null;
@@ -39,7 +39,10 @@ public class eUIBuilderEditor : EditorWindow
     [SerializeField] private GameObject m_DropdownPrefab = null;
     [SerializeField] private GameObject m_InputFieldPrefab = null;
 
-    // Expand
+    // "Expand Layout"
+    [SerializeField] private GameObject m_DockLayoutPrefab = null;
+
+    // "Expand UI"
     [SerializeField] private GameObject m_LoopScrollPrefab = null;
 
     private Vector2 m_IconSize = new Vector2(48.0f, 48.0f);
@@ -162,6 +165,13 @@ public class eUIBuilderEditor : EditorWindow
         #endregion
 
         EditorGUILayout.Space(16.0f, false);
+
+        #region Expand Layout 
+        EditorGUILayout.LabelField("[ Expand Layout ]");
+        EditorGUILayout.BeginHorizontal();
+        CreateButton("DockLayout", "DockLayout", m_DockLayoutPrefab, OnBtnClicked<eDockLayout>, true);
+        EditorGUILayout.EndHorizontal();
+        #endregion
 
         #region Expand UI
         EditorGUILayout.LabelField("[ Expand UI ]");

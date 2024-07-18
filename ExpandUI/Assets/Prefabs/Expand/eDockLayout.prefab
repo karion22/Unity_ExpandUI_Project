@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 3723091085256589831}
   - component: {fileID: 9100794323598908507}
   m_Layer: 5
-  m_Name: DockPanel
+  m_Name: eDockLayout
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
