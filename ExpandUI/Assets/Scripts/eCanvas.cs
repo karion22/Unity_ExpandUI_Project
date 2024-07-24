@@ -6,6 +6,7 @@ using UnityEngine.UI;
 [RequireComponent(typeof(CanvasScaler))]
 public class eCanvas : eElement
 {
+    #region Enum
     public enum eSortLayer
     {
         MostDown = 1,
@@ -24,26 +25,36 @@ public class eCanvas : eElement
         Expand
     }
 
+    public enum eCanvasType
+    {
+        Default,
+        Alone,
+        Unique,
+    }
+    #endregion
+
     [SerializeField] private bool m_IsRoot = false;
 
-    [SerializeField] private bool m_IgnoreSort;
-    public bool IsIgnoreSort { get { return m_IgnoreSort; } set { m_IgnoreSort = value; } }
+    [SerializeField] private bool m_IgnoreSort = false;
+    public bool IsIgnoreSort { get { return m_IgnoreSort; }}
 
-    [SerializeField] private bool m_IsShowAlone;
-    public bool IsShowAlone { get { return m_IsShowAlone; } set { m_IsShowAlone = value; } }
+    [SerializeField] private eCanvasType m_CanvasType = eCanvasType.Default;
 
     [SerializeField] private eSortLayer m_SortLayer = eSortLayer.Default;
     public eSortLayer SortLayer { get { return m_SortLayer; } }
 
+    #region Property
     private Canvas m_Canvas;
     public Canvas Canvas
     {
         get
         {
-            if (m_Canvas == null) m_Canvas = GetComponent<Canvas>();
+            if (object.ReferenceEquals(m_Canvas, null))
+                m_Canvas = GetComponent<Canvas>();
             return m_Canvas;
         }
     }
+    #endregion
 
     protected override void Start()
     {
@@ -58,7 +69,7 @@ public class eCanvas : eElement
             Canvas.sortingLayerName = "UI";
         }
 
-        if (IsShowAlone)
+        if (m_CanvasType == eCanvasType.Alone)
             UIMgr.Instance.AloneCanvas(this);
     }
 
@@ -85,14 +96,14 @@ public class eCanvas : eElement
             case ePreset.MatchByHeight:
                 {
                     canvasScaler.screenMatchMode = CanvasScaler.ScreenMatchMode.MatchWidthOrHeight;
-                    canvasScaler.matchWidthOrHeight = 1.0f;
+                    //canvasScaler.matchWidthOrHeight = 1.0f;
                 }
                 break;
 
             case ePreset.Expand:
                 {
                     canvasScaler.screenMatchMode = CanvasScaler.ScreenMatchMode.Expand;
-                    canvasScaler.matchWidthOrHeight = 1.0f;
+                    //canvasScaler.matchWidthOrHeight = 1.0f;
                 }
                 break;
         }

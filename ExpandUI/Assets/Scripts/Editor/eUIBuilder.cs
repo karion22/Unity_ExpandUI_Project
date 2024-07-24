@@ -1,10 +1,9 @@
 using KRN.Utility;
-using System.Diagnostics.Eventing.Reader;
+using System;
+using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.Events;
-using UnityEngine.Rendering.UI;
-using UnityEngine.UI;
 
 public class eUIBuilderEditor : EditorWindow
 {
@@ -38,6 +37,7 @@ public class eUIBuilderEditor : EditorWindow
     [SerializeField] private GameObject m_ButtonPrefab = null;
     [SerializeField] private GameObject m_DropdownPrefab = null;
     [SerializeField] private GameObject m_InputFieldPrefab = null;
+    [SerializeField] private GameObject m_ProgressPrefab = null;
 
     // "Expand Layout"
     [SerializeField] private GameObject m_DockLayoutPrefab = null;
@@ -69,6 +69,9 @@ public class eUIBuilderEditor : EditorWindow
     private eCanvas m_Canvas = null;
     private eUICamera m_UICamera = null;
 
+    private float m_ItemWidth = 0f;
+    private const float LEFT_PADDING = 8.0f;
+
     private void OnGUI()
     {
         if (m_Initialize == false)
@@ -95,7 +98,9 @@ public class eUIBuilderEditor : EditorWindow
         #region Default UI
         m_ScrollPos = EditorGUILayout.BeginScrollView(m_ScrollPos);
         EditorGUILayout.LabelField("[ Default UI ]");
-        EditorGUILayout.BeginHorizontal();
+        
+        EditorGUILayout.BeginHorizontal(GUILayout.Width(m_ItemWidth));
+        EditorGUILayout.Space(LEFT_PADDING, false);
 
         // Canvas
         CreateIconButton("Canvas Icon", "Canvas", OnCanvasBtnClicked);
@@ -108,8 +113,8 @@ public class eUIBuilderEditor : EditorWindow
         EditorGUILayout.EndHorizontal();
         EditorGUILayout.Space(m_SpacingSize.y, false);
 
-        EditorGUILayout.BeginHorizontal();
-
+        EditorGUILayout.BeginHorizontal(GUILayout.Width(m_ItemWidth));
+        EditorGUILayout.Space(LEFT_PADDING, false);
         // Image
         CreateIconButton("d_Image Icon", "Image", m_ImagePrefab, OnBtnClicked<eImage>);
 
@@ -121,7 +126,8 @@ public class eUIBuilderEditor : EditorWindow
         EditorGUILayout.EndHorizontal();
         EditorGUILayout.Space(m_SpacingSize.y, false);
 
-        EditorGUILayout.BeginHorizontal();
+        EditorGUILayout.BeginHorizontal(GUILayout.Width(m_ItemWidth));
+        EditorGUILayout.Space(LEFT_PADDING, false);
         // Text
         CreateIconButton("d_Text Icon", "Text", m_TextPrefab, OnBtnClicked<eText>);
 
@@ -133,33 +139,39 @@ public class eUIBuilderEditor : EditorWindow
         EditorGUILayout.EndHorizontal();
         EditorGUILayout.Space(m_SpacingSize.y, false);
 
-        EditorGUILayout.BeginHorizontal();
+        EditorGUILayout.BeginHorizontal(GUILayout.Width(m_ItemWidth));
+        EditorGUILayout.Space(LEFT_PADDING, false);
         // Slider
         CreateIconButton("d_Slider Icon", "Slider", m_SliderPrefab, OnBtnClicked<eSlider>);
 
         EditorGUILayout.Space(m_SpacingSize.x, false);
 
-        // Scrollbar
-        CreateIconButton("d_Scrollbar Icon", "Scrollbar", m_ScrollbarPrefab, OnBtnClicked<eScrollbar>);
+        // Progress
+        CreateIconButton("sv_icon_name0", "Progress", m_ProgressPrefab, OnBtnClicked<eProgress>);
         EditorGUILayout.EndHorizontal();
+
         EditorGUILayout.Space(m_SpacingSize.y, false);
 
-        EditorGUILayout.BeginHorizontal();
+        EditorGUILayout.BeginHorizontal(GUILayout.Width(m_ItemWidth));
+        EditorGUILayout.Space(LEFT_PADDING, false);
         // Button
         CreateIconButton("d_Button Icon", "Button", m_ButtonPrefab, OnBtnClicked<eButton>);
 
         EditorGUILayout.Space(m_SpacingSize.x, false);
 
-        // Dropdown
-        CreateIconButton("d_Dropdown Icon", "Dropdown", m_DropdownPrefab, OnBtnClicked<eDropdown>);
+        // Toggle
+        CreateIconButton("d_Toggle Icon", "Toggle", m_TogglePrefab, OnBtnClicked<eToggle>);
         EditorGUILayout.EndHorizontal();
         EditorGUILayout.Space(m_SpacingSize.y, false);
 
-        EditorGUILayout.BeginHorizontal();
-        // Toggle
-        CreateIconButton("d_Toggle Icon", "Toggle", m_TogglePrefab, OnBtnClicked<eToggle>);
-
+        EditorGUILayout.BeginHorizontal(GUILayout.Width(m_ItemWidth));
+        EditorGUILayout.Space(LEFT_PADDING, false);
+        // Dropdown
+        CreateIconButton("d_Dropdown Icon", "Dropdown", m_DropdownPrefab, OnBtnClicked<eDropdown>);
         EditorGUILayout.Space(m_SpacingSize.x, false);
+
+        // Scrollbar
+        CreateIconButton("d_Scrollbar Icon", "Scrollbar", m_ScrollbarPrefab, OnBtnClicked<eScrollbar>);
         EditorGUILayout.EndHorizontal();
         EditorGUILayout.Space(m_SpacingSize.y, false);
         #endregion
@@ -168,14 +180,16 @@ public class eUIBuilderEditor : EditorWindow
 
         #region Expand Layout 
         EditorGUILayout.LabelField("[ Expand Layout ]");
-        EditorGUILayout.BeginHorizontal();
-        CreateButton("DockLayout", "DockLayout", m_DockLayoutPrefab, OnBtnClicked<eDockLayout>, true);
+        EditorGUILayout.BeginHorizontal(GUILayout.Width(m_ItemWidth));
+        EditorGUILayout.Space(LEFT_PADDING, false);
+        CreateIconButton("d_TimelineAsset On Icon", "DockLayout", m_DockLayoutPrefab, OnBtnClicked<eDockLayout>, true);
         EditorGUILayout.EndHorizontal();
         #endregion
 
         #region Expand UI
         EditorGUILayout.LabelField("[ Expand UI ]");
-        EditorGUILayout.BeginHorizontal();
+        EditorGUILayout.BeginHorizontal(GUILayout.Width(m_ItemWidth));
+        EditorGUILayout.Space(LEFT_PADDING, false);
         CreateButton("LoopScroll", "LoopScroll", m_LoopScrollPrefab, OnBtnClicked<eLoopScroll>, true);
         EditorGUILayout.EndHorizontal();
         #endregion
@@ -209,7 +223,7 @@ public class eUIBuilderEditor : EditorWindow
 
     private void OnResize()
     {
-
+        m_ItemWidth = (m_IconSize.x * 2.0f) + LEFT_PADDING + m_SpacingSize.x;
     }
 
     private void CreateHeaderGUI()
@@ -257,21 +271,18 @@ public class eUIBuilderEditor : EditorWindow
     {
 
     }
-
     
     private void CreateIconButton(string inIconName, string inDescription, UnityAction onClicked, UnityAction onExpandBtnClicked = null)
     {
-        CreateIconButton(inIconName, inDescription, onClicked, onExpandBtnClicked, m_IconSize.x, m_IconSize.y, m_ExpandBtnSize.x, m_ExpandBtnSize.y);
-    }
-    
+        CreateIconButton_Impl(inIconName, inDescription, onClicked, onExpandBtnClicked, m_IconSize.x, m_IconSize.y, m_ExpandBtnSize.x, m_ExpandBtnSize.y);
+    }    
 
     private void CreateIconButton(string inIconName, string inDescription, GameObject inPrefab, UnityAction<GameObject, bool> onClicked, bool searchByChild = false, UnityAction onExpandBtnClicked = null)
     {
-        CreateIconButton(inIconName, inDescription, inPrefab, onClicked, searchByChild, onExpandBtnClicked, m_IconSize.x, m_IconSize.y, m_ExpandBtnSize.x, m_ExpandBtnSize.y);
+        CreateIconButton_Impl(inIconName, inDescription, inPrefab, onClicked, searchByChild, onExpandBtnClicked, m_IconSize.x, m_IconSize.y, m_ExpandBtnSize.x, m_ExpandBtnSize.y);
     }
 
-    
-    private void CreateIconButton(string inIconName, string inDescription, UnityAction onClicked, UnityAction onExpandBtnClicked, float inWidth, float inHeight, float inExpandWidth, float inExpandHeight)
+    private void CreateIconButton_Impl(string inIconName, string inDescription, UnityAction onClicked, UnityAction onExpandBtnClicked, float inWidth, float inHeight, float inExpandWidth, float inExpandHeight)
     {
         float realWidth = inWidth;
         if (onExpandBtnClicked != null)
@@ -296,7 +307,7 @@ public class eUIBuilderEditor : EditorWindow
         EditorGUILayout.EndVertical();
     }    
 
-    private void CreateIconButton(string inIconName, string inDescription, GameObject inPrefab, UnityAction<GameObject, bool> onClicked, bool searchByChild, UnityAction onExpandBtnClicked, float inWidth, float inHeight, float inExpandWidth, float inExpandHeight)
+    private void CreateIconButton_Impl(string inIconName, string inDescription, GameObject inPrefab, UnityAction<GameObject, bool> onClicked, bool searchByChild, UnityAction onExpandBtnClicked, float inWidth, float inHeight, float inExpandWidth, float inExpandHeight)
     {
         float realWidth = inWidth;
         if (onExpandBtnClicked != null)
@@ -350,7 +361,8 @@ public class eUIBuilderEditor : EditorWindow
         if (m_UICamera == null)
             CreateUICamera();
 
-        newElement.SetCamera(m_UICamera.Camera);
+        
+        //newElement.SetCamera(m_UICamera.Camera);
 
         Selection.activeGameObject = newPrefab;
     }
@@ -426,5 +438,10 @@ public class eUIBuilderEditor : EditorWindow
                 return target.transform;
             }
         }
+    }
+
+    private void Update()
+    {
+        
     }
 }

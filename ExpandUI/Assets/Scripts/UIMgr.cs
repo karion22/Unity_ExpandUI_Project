@@ -13,6 +13,8 @@ public class UIMgr : Singleton<UIMgr>
 
     List<eCanvas> m_CanvasList = new List<eCanvas>();
 
+    public GameObject m_LongPressPrefab = null;
+
     [SerializeField] private GameObject m_CameraPrefab = null;
     private Camera m_Camera = null;
     public Camera Camera 

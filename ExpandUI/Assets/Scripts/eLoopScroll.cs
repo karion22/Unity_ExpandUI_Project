@@ -269,7 +269,7 @@ public class eLoopScroll : eElement
             eEventElement uiEvent = newItem.GetComponent<eEventElement>();
             if ( uiEvent != null )
             {
-                uiEvent.onClickEvent.AddListener(OnItemClicked);
+                uiEvent.onButtonClicked.AddListener(OnItemClicked);
                 uiEvent.onLongPressed.AddListener(OnItemLongPressed);
             }
         }

@@ -1,10 +1,11 @@
 using KRN.Utility;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
-public class eElement : MonoBehaviour
+public class eElement : UIBehaviour
 {
     protected RectTransform m_RectTransform = null;
-    public RectTransform RectTransform
+    protected RectTransform RectTransform
     {
         get
         {
@@ -14,16 +15,10 @@ public class eElement : MonoBehaviour
         }
     }
 
-    protected virtual void Awake() { }
-    protected virtual void Start() { }
     public virtual void OnCreated(int inElement, Transform inParent) 
     {
-        transform.SetParent(inParent);
+        transform.SetParent(inParent, false);
     }
-
-    protected virtual void OnDestroy() { }
-    protected virtual void OnEnable() { }
-    protected virtual void OnDisable() { }
 
     public virtual void SetActive(bool isActivate)
     {
@@ -36,5 +31,11 @@ public class eElement : MonoBehaviour
             gameObject.SetActive(isActivate);
             RectTransform.parent?.GetComponent<eDockLayout>()?.UpdateLayout(false);
         }
+    }
+
+    public virtual void SetSize(Vector2 inSize)
+    {
+        if(RectTransform != null)
+            RectTransform.sizeDelta = inSize;
     }
 }

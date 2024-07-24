@@ -18,7 +18,11 @@ public class eText : eElement
 
     public void SetText(string inText)
     {
-        if (m_Text != null)
-            m_Text.text = inText;
+        if (Text != null) Text.text = inText;
+    }
+
+    public void SetAlignment(TextAnchor inAnchor)
+    {
+        if(Text != null) Text.alignment = inAnchor;
     }
 }

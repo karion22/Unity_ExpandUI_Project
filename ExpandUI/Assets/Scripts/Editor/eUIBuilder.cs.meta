@@ -18,6 +18,7 @@ MonoImporter:
   - m_ButtonPrefab: {fileID: 8927297790217456835, guid: 1096d8953cc57cc4d9fcf64ac6b33e29, type: 3}
   - m_DropdownPrefab: {fileID: 8863812376277141120, guid: d7f0159c17590904c81ed01cc97e86cf, type: 3}
   - m_InputFieldPrefab: {fileID: 2810175211861819702, guid: 7959735d0c08b84408774b0d72cf248d, type: 3}
+  - m_ProgressPrefab: {fileID: 529568895494129722, guid: 2d2532d6e0833774ab08a1fb84ea723e, type: 3}
   - m_DockLayoutPrefab: {fileID: 6899758090055515371, guid: e77f66ab71e75cc46ac4f38e24f6009a, type: 3}
   - m_LoopScrollPrefab: {fileID: 806854161834524939, guid: 7797e39c1fbc539449835a89c533957b, type: 3}
   executionOrder: 0

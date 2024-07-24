@@ -7,7 +7,7 @@ public class eImage : ePanel
 {
     protected Image m_Image;
 
-    protected Image Image
+    public Image Image
     {
         get
         {
