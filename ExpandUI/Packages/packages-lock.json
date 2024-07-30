@@ -1,5 +1,13 @@
 {
   "dependencies": {
+    "com.karion22.expandui": {
+      "version": "file:../com.karion22.expandui",
+      "depth": 0,
+      "source": "local",
+      "dependencies": {
+        "com.karion22.utility": "0.0.12"
+      }
+    },
     "com.karion22.utility": {
       "version": "https://github.com/karion22/Unity_Utility.git",
       "depth": 0,

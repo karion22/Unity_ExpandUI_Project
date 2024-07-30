@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "com.karion22.expandui": "file:../com.karion22.expandui",
     "com.karion22.utility": "https://github.com/karion22/Unity_Utility.git",
     "com.unity.2d.sprite": "1.0.0",
     "com.unity.ai.navigation": "2.0.0",
