@@ -59,7 +59,7 @@ public class eCanvas : eElement
     protected override void Start()
     {
         base.Start();
-
+        
         if (Canvas.isRootCanvas)
         {
             UIMgr.Instance.AddCanvas(this);
