@@ -12,5 +12,6 @@
     "url": "https://github.com/karion22/Unity_ExpandUI.git"
   },
   "dependencies": {
+    "com.karion22.utility": "0.0.12"
   }
 }
